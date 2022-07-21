@@ -1,47 +1,3 @@
-// ===== TimeTree API Methods =====
-// TimeTree API
-function timetreeAPI(url, method, payload) {
-  const accessToken = PropertiesService.getScriptProperties().getProperty('TIMETREE_TOKEN');
-  const headers = {
-    'Authorization': 'Bearer '+ accessToken
-  };
-  const options = {
-    'method': method,
-    'headers': headers,
-    'payload': payload
-  };
-
-  return UrlFetchApp.fetch(url, options);
-}
-
-// カレンダーリストの取得
-function timetreeGetCalendars() {
-  var url = 'https://timetreeapis.com/calendars';
-  var method = 'GET';
-  var payload = '';
-  return timetreeAPI(url, method, payload);
-}
-
-// カレンダーから特定のカレンダーのみを取得する
-function timetreeGetCalendarIdByName(name) {
-  var response = timetreeGetCalendars();
-  var calendars = JSON.parse(response).data;
-
-  var calendar = calendars.filter(function(data){
-    return data.attributes.name.toString() === name;
-  });
-  return calendar[0].id;
-}
-
-// カレンダーの当日以降の予定を取得(daysは1以上7以下)
-function timetreeGetUpcomingEvents(id, days) {
-  var url = 'https://timetreeapis.com/calendars/' + id + '/upcoming_events?timezone=Asia/Tokyo&days=' + days;
-  var method = 'GET'; 
-  var payload = '';
-  return timetreeAPI(url, method, payload);
-}
-
-
 // ===== LINE Messaging API =====
 function lineMessagingAPI(date, flex) {
   const LINE_TOKEN = PropertiesService.getScriptProperties().getProperty('LINE_TOKEN');
@@ -71,14 +27,11 @@ function lineMessagingAPI(date, flex) {
 
 // ===== Main =====
 function notify() {
-  const d = new Date();
-  const today = (d.getMonth() + 1) + '月' + d.getDate() + '日（' + '日月火水木金土'[d.getDay()] + '）';
+  // 日付と祝日の取得
+  const today = getDate();
+  const holiday = getHoliday();
 
-
-  const [event_holiday] = CalendarApp.getCalendarById('ja.japanese#holiday@group.v.calendar.google.com').getEventsForDay(d);
-  const holiday = event_holiday ? event_holiday.getTitle() : '';
-
-
+  // 天気情報の取得
   const area = '13104';
   let content = UrlFetchApp.fetch('https://static.tenki.jp/static-api/history/forecast/' + area + '.js').getContentText();
   content = JSON.parse(content.substring(content.indexOf('(') + 1, content.indexOf(');')));
