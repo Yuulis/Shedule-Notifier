@@ -1,35 +1,10 @@
-// ===== LINE Messaging API =====
-function lineMessagingAPI(date, flex) {
-  const LINE_TOKEN = PropertiesService.getScriptProperties().getProperty('LINE_TOKEN');
-
-  const payload = {
-    'messages': [
-      {
-        'type': 'flex',
-        'altText': date,
-        'contents': flex
-      }
-    ]
-  };
-
-  const options = {
-    'headers': {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Authorization': 'Bearer ' + LINE_TOKEN
-    },
-    'method': 'post',
-    'payload': JSON.stringify(payload)
-  };
-
-  UrlFetchApp.fetch('https://api.line.me/v2/bot/message/broadcast', options);
-}
-
-
-// ===== Main =====
 function notify() {
+  let date = new Date()
+  date.setDate(date.getDate() + 1);
+
   // 日付と祝日の取得
-  const today = getDate();
-  const holiday = getHoliday();
+  const today = getDate(date);
+  const holiday = getHoliday(date);
 
   // 天気情報の取得
   const area = '13104';
@@ -124,7 +99,7 @@ function notify() {
     }
   };
 
-
+  // 祝日情報の挿入
   if (holiday != '') {
     flex.body.contents[1].contents.splice(0, 0, {
       'type': 'text',
@@ -136,20 +111,26 @@ function notify() {
     });
   }
 
-  const response = timetreeGetCalendars();
-  const calendars = JSON.parse(response).data;
-  const z = (t) => ('0' + t).slice(-2);
+  // カレンダー情報の取得
+  const calendars = JSON.parse(timetreeGetCalendars()).data;
 
-  let ev_exists = false;
+  const zero_padding = (t) => ('0' + t).slice(-2);
+
+  let event_exists = false;
   for (let calendar of calendars) {
-    let events = JSON.parse(timetreeGetUpcomingEvents(calendar.id, 1)).data;
+    let events = JSON.parse(timetreeGetUpcomingEvents(calendar.id, 2)).data;
 
     for (let event of events) {
       let {title, start_at, end_at, all_day} = event.attributes;
       start_at = new Date(start_at);
+
+      // 今日の日付は通知しない
+      let today_str = Utilities.formatDate(new Date(), 'JST', 'MM/dd');
+      let eventDate_str = Utilities.formatDate(start_at, 'JST', 'MM/dd');
+      if (today_str == eventDate_str) continue;
+
       end_at = new Date(end_at);
-      let time = all_day ? '終日' : z(start_at.getHours()) + ':' + z(start_at.getMinutes()) + '-' + 
-        z(end_at.getHours()) + ':' + z(end_at.getMinutes());
+      let time = all_day ? '終日' : zero_padding(start_at.getHours()) + ':' + zero_padding(start_at.getMinutes()) + '-' + zero_padding(end_at.getHours()) + ':' + zero_padding(end_at.getMinutes());
       let schedule = {
         'type': 'box',
         'layout': 'horizontal',
@@ -175,11 +156,11 @@ function notify() {
         'margin': 'sm'
       };
       flex.body.contents[4].contents.push(schedule);
-      ev_exists = true;
+      event_exists = true;
     }
   }
 
-  if (!ev_exists) {
+  if (!event_exists) {
     flex.body.contents.splice(3, 2);
   }
 

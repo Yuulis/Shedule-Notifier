@@ -15,18 +15,18 @@ function timetreeAPI(url, method, payload) {
 
 // カレンダーリストの取得
 function timetreeGetCalendars() {
-  var url = 'https://timetreeapis.com/calendars';
-  var method = 'GET';
-  var payload = '';
+  let url = 'https://timetreeapis.com/calendars';
+  let method = 'GET';
+  let payload = '';
   return timetreeAPI(url, method, payload);
 }
 
 // カレンダーから特定のカレンダーのみを取得する
 function timetreeGetCalendarIdByName(name) {
-  var response = timetreeGetCalendars();
-  var calendars = JSON.parse(response).data;
+  let response = timetreeGetCalendars();
+  let calendars = JSON.parse(response).data;
 
-  var calendar = calendars.filter(function(data){
+  let calendar = calendars.filter(function(data){
     return data.attributes.name.toString() === name;
   });
   return calendar[0].id;
@@ -34,8 +34,8 @@ function timetreeGetCalendarIdByName(name) {
 
 // カレンダーの当日以降の予定を取得(daysは1以上7以下)
 function timetreeGetUpcomingEvents(id, days) {
-  var url = 'https://timetreeapis.com/calendars/' + id + '/upcoming_events?timezone=Asia/Tokyo&days=' + days;
-  var method = 'GET'; 
-  var payload = '';
+  let url = 'https://timetreeapis.com/calendars/' + id + '/upcoming_events?timezone=Asia/Tokyo&days=' + days;
+  let method = 'GET'; 
+  let payload = '';
   return timetreeAPI(url, method, payload);
 }
