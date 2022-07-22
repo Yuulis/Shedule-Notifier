@@ -1,0 +1,137 @@
+{
+  "type": "bubble",
+  "size": "giga",
+  "header": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "Tomorrow's events",
+        "size": "xl",
+        "color": "#444444",
+        "style": "italic"
+      }
+    ]
+  },
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "7月22日 (金)",
+        "size": "xxl",
+        "weight": "bold",
+        "color": "#444444",
+        "margin": "xs"
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "text",
+            "text": "☀",
+            "size": "lg",
+            "align": "end",
+            "color": "#444444",
+            "gravity": "center"
+          }
+        ]
+      },
+      {
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
+          {
+            "type": "filler"
+          },
+          {
+            "type": "text",
+            "text": "15℃",
+            "color": "#3f51b5",
+            "size": "lg",
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": "/",
+            "color": "#444444",
+            "size": "lg",
+            "margin": "xs",
+            "flex": 0
+          },
+          {
+            "type": "text",
+            "text": "25℃",
+            "color": "#f44336",
+            "size": "lg",
+            "flex": 0,
+            "margin": "xs",
+            "gravity": "center"
+          }
+        ]
+      },
+      {
+        "type": "separator",
+        "color": "#808080",
+        "margin": "xl"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "終日",
+                "flex": 0,
+                "size": "md",
+                "color": "#808080",
+                "gravity": "center"
+              },
+              {
+                "type": "text",
+                "text": "イベント名",
+                "size": "lg",
+                "margin": "lg",
+                "color": "#606060",
+                "weight": "bold",
+                "flex": 0,
+                "gravity": "center"
+              },
+              {
+                "type": "box",
+                "layout": "horizontal",
+                "contents": [
+                  {
+                    "type": "text",
+                    "color": "#606060",
+                    "gravity": "center",
+                    "margin": "lg",
+                    "size": "md",
+                    "flex": 0,
+                    "wrap": true,
+                    "text": "none"
+                  }
+                ],
+                "margin": "none"
+              }
+            ],
+            "margin": "sm"
+          }
+        ],
+        "margin": "xl"
+      }
+    ]
+  },
+  "styles": {
+    "header": {
+      "backgroundColor": "#a3ffa3"
+    }
+  }
+}
