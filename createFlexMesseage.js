@@ -12,8 +12,7 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
           "text": "Tomorrow's events",
           "size": "lg",
           "style": "italic",
-          "color": "#444444",
-          "flex": 0
+          "color": "#444444"
         }
       ]
     },
@@ -27,7 +26,6 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
           "size": "xxl",
           "weight": "bold",
           "color": "#444444",
-          "flex": 0,
           "margin": "xs"
         },
         {
@@ -122,51 +120,96 @@ function createScheduleFlexMesseage(flex) {
 
   const zero_padding = (t) => ('0' + t).slice(-2);
 
-  let event_exists = false;
   for (let calendar of calendars) {
     let events = JSON.parse(timetreeGetUpcomingEvents(calendar.id, 2)).data;
 
+    // 予定なしの時は通知しない
+    if (events.length == 0) {
+      let schedule = createNoEventsMessage();
+      flex.body.contents[4].contents.push(schedule);
+      continue;
+    }
+
     for (let event of events) {
-      let {title, start_at, end_at, all_day} = event.attributes;
+      let {title, description, start_at, end_at, all_day} = event.attributes;
       start_at = new Date(start_at);
 
-      // 今日の日付は通知しない
+      // 今日の予定は通知しない
       let today_str = Utilities.formatDate(new Date(), 'JST', 'MM/dd');
       let eventDate_str = Utilities.formatDate(start_at, 'JST', 'MM/dd');
       if (today_str == eventDate_str) continue;
 
       end_at = new Date(end_at);
       let time = all_day ? '終日' : zero_padding(start_at.getHours()) + ':' + zero_padding(start_at.getMinutes()) + '-' + zero_padding(end_at.getHours()) + ':' + zero_padding(end_at.getMinutes());
+      
+      // メモがないとき
+      if (description === null) description = 'メモはありません';
+      
       let schedule = {
-        'type': 'box',
-        'layout': 'horizontal',
-        'contents': [
+        "type": "box",
+        "layout": "horizontal",
+        "contents": [
           {
-            'type': 'text',
-            'text': time,
-            'flex': 0,
-            'color': '#808080',
-            'gravity': 'center',
-            'size': 'md'
-          }, {
-            'type': 'text',
-            'text': title,
-            'size': 'lg',
-            'weight': 'bold',
-            'color': '#606060',
-            'flex': 0,
-            'gravity': 'center',
-            'margin': 'lg'
+            "type": "text",
+            "text": time,
+            "flex": 0,
+            "size": "md",
+            "color": "#808080",
+            "gravity": "center"
+          },
+          {
+            "type": "text",
+            "text": title,
+            "size": "lg",
+            "margin": "lg",
+            "color": "#606060",
+            "weight": "bold",
+            "flex": 0,
+            "gravity": "center"
+          },
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "color": "#606060",
+                "gravity": "center",
+                "margin": "lg",
+                "size": "md",
+                "flex": 0,
+                "wrap": true,
+                "text": description
+              }
+            ],
+            "margin": "none"
           }
         ],
-        'margin': 'sm'
+        "margin": "sm"
       };
+
       flex.body.contents[4].contents.push(schedule);
       event_exists = true;
     }
   }
+}
 
-  if (!event_exists) {
-    flex.body.contents.splice(3, 2);
+function createNoEventsMessage() {
+  return {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "予定はありません :)",
+        "size": "lg",
+        "margin": "lg",
+        "color": "#606060",
+        "weight": "bold",
+        "gravity": "center",
+        "flex": 0
+      }
+    ],
+    "margin": "sm"
   }
 }
