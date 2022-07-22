@@ -1,4 +1,4 @@
-// 今日の日付を取得
+// 日付を取得
 function getDate(date) {
   return (date.getMonth() + 1) + '月' + date.getDate() + '日（' + '日月火水木金土'[date.getDay()] + '）';
 }
