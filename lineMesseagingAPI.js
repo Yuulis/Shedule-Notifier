@@ -1,8 +1,10 @@
 // LINE Messeaging API
 function lineMessagingAPI(date, flex) {
   const LINE_TOKEN = PropertiesService.getScriptProperties().getProperty('LINE_TOKEN');
+  const ToID = PropertiesService.getScriptProperties().getProperty("LINE_GROUP_ID");
 
   const payload = {
+    'to' : ToID,
     'messages': [
       {
         'type': 'flex',
@@ -21,5 +23,5 @@ function lineMessagingAPI(date, flex) {
     'payload': JSON.stringify(payload)
   };
 
-  UrlFetchApp.fetch('https://api.line.me/v2/bot/message/broadcast', options);
+  UrlFetchApp.fetch('https://api.line.me/v2/bot/message/push', options);
 }

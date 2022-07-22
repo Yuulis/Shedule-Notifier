@@ -1,4 +1,8 @@
+const ACCESS_TOKEN = PropertiesService.getScriptProperties().getProperty('LINE_TOKEN');
+ 
 function notify() {
+  delTrigger();
+
   let date = new Date()
   date.setDate(date.getDate() + 1);
 

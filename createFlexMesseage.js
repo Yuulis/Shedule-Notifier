@@ -9,7 +9,7 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
       "contents": [
         {
           "type": "text",
-          "text": "Tomorrow's Events",
+          "text": "Tomorrow's events",
           "size": "lg",
           "style": "italic",
           "color": "#444444",
