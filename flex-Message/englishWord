@@ -142,47 +142,47 @@
       },
       {
         "type": "box",
-        "layout": "horizontal",
-        "contents": [
-          {
-            "type": "text",
-            "text": "【15】",
-            "flex": 0,
-            "size": "md",
-            "color": "#444444"
-          },
-          {
-            "type": "text",
-            "text": "notify",
-            "size": "md",
-            "flex": 0,
-            "color": "#444444"
-          },
-          {
-            "type": "text",
-            "text": "(動)",
-            "flex": 0,
-            "margin": "md",
-            "size": "md",
-            "gravity": "center",
-            "color": "#444444"
-          }
-        ],
-        "margin": "xs"
-      },
-      {
-        "type": "box",
         "layout": "vertical",
         "contents": [
           {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "【10】",
+                "flex": 0,
+                "size": "md",
+                "color": "#444444"
+              },
+              {
+                "type": "text",
+                "text": "notify",
+                "flex": 0,
+                "size": "md",
+                "color": "#444444"
+              },
+              {
+                "type": "text",
+                "text": "(動)",
+                "flex": 0,
+                "size": "md",
+                "margin": "md",
+                "color": "#444444",
+                "gravity": "center"
+              }
+            ],
+            "margin": "xs"
+          },
+          {
             "type": "text",
             "text": "知らせる",
-            "size": "sm",
-            "margin": "xs",
-            "color": "#444444",
-            "gravity": "center",
             "wrap": true,
-            "offsetStart": "md"
+            "gravity": "center",
+            "margin": "xs",
+            "size": "sm",
+            "color": "#444444",
+            "offsetStart": "50px"
           }
         ]
       }
