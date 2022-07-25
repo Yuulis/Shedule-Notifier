@@ -90,9 +90,33 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
         }
       ]
     },
+    "footer": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "今日の英単語",
+          "margin": "xs",
+          "size": "xl",
+          "color": "#444444"
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "contents": [
+            // English word
+          ]
+        }
+      ],
+      "paddingStart": "xxl"
+    },
     "styles": {
       "header": {
         "backgroundColor": "#a3ffa3"
+      },
+      "footer": {
+        "backgroundColor": "#ffead6"
       }
     }
   };
@@ -109,7 +133,14 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
     });
   }
 
+  // スケジュール
   createScheduleFlexMesseage(flex);
+
+  // 今日の英単語
+  let englishWord = getWord();
+  let wordMeaning = getMeaning();
+  flex.footer.contents[1].contents.push(englishWord);
+  flex.footer.contents[1].contents.push(wordMeaning);
 
   return flex;
 }
@@ -176,7 +207,7 @@ function createScheduleFlexMesseage(flex) {
                 "color": "#606060",
                 "gravity": "center",
                 "margin": "lg",
-                "size": "md",
+                "size": "sm",
                 "flex": 0,
                 "wrap": true,
                 "text": description
