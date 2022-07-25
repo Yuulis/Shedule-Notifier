@@ -151,6 +151,8 @@ function createScheduleFlexMesseage(flex) {
 
   const zero_padding = (t) => ('0' + t).slice(-2);
 
+  let event_exists = false;
+  
   for (let calendar of calendars) {
     let events = JSON.parse(timetreeGetUpcomingEvents(calendar.id, 2)).data;
 
@@ -158,6 +160,7 @@ function createScheduleFlexMesseage(flex) {
     if (events.length == 0) {
       let schedule = createNoEventsMessage();
       flex.body.contents[4].contents.push(schedule);
+      event_exists = true;
       continue;
     }
 
@@ -223,6 +226,12 @@ function createScheduleFlexMesseage(flex) {
       event_exists = true;
     }
   }
+
+  // 予定なしの時は通知しない
+    if (!event_exists) {
+      let schedule = createNoEventsMessage();
+      flex.body.contents[4].contents.push(schedule);
+    }
 }
 
 function createNoEventsMessage() {
