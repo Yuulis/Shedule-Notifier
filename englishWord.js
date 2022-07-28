@@ -1,4 +1,4 @@
-const sheet =  SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("ENGLISHWORD_SHEET")).getSheetByName("必修英単語");
+const sheet =  SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("ENGLISHWORD_SHEET")).getSheetByName("必修速読英単語");
 const wordNum = sheet.getLastRow();
 let wordIndex = Math.floor(Math.random() * wordNum) + 1;
 
