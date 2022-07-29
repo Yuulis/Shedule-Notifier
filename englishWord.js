@@ -1,4 +1,6 @@
-const sheet =  SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("ENGLISHWORD_SHEET")).getSheetByName("必修速読英単語");
+const sheet_name = Math.floor(Math.random() * 2) == 0 ? "必修速読英単語" : "英熟語ターゲット";
+const wordID_str = sheet_name === "必修速読英単語" ? '速単-' : '熟語-';
+const sheet =  SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("ENGLISHWORD_SHEET")).getSheetByName(sheet_name);
 const wordNum = sheet.getLastRow();
 let wordIndex = Math.floor(Math.random() * wordNum) + 1;
 
@@ -13,7 +15,7 @@ function getWord() {
     "contents": [
       {
         "type": "text",
-        "text": '【' + wordID + '】',
+        "text": '【' + wordID_str + wordID + '】',
         "flex": 0,
         "size": "md",
         "color": "#444444"
