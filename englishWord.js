@@ -52,6 +52,6 @@ function getMeaning() {
     "margin": "xs",
     "size": "sm",
     "color": "#444444",
-    "offsetStart": "50px"
+    "offsetStart": "md"
   }
 }
