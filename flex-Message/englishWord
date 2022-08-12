@@ -177,12 +177,12 @@
           {
             "type": "text",
             "text": "知らせる",
-            "wrap": true,
             "gravity": "center",
             "margin": "xs",
             "size": "sm",
             "color": "#444444",
-            "offsetStart": "50px"
+            "offsetStart": "md",
+            "wrap": true
           }
         ]
       }
