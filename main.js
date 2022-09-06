@@ -30,8 +30,8 @@ function notify() {
   }
 
   // flex messeageの作成
-  let flex = createFlexMessage(tomorrow, holiday, temp_h, temp_l, weather);
+  const {flex, doNotify} = createFlexMessage(tomorrow, holiday, temp_h, temp_l, weather);
 
   // LINE Messaging APIへ送信
-  lineMessagingAPI(tomorrow, flex);
+  if (doNotify) lineMessagingAPI(tomorrow, flex);
 }

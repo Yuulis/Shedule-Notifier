@@ -90,27 +90,6 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
         }
       ]
     },
-    "footer": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "今日の英単語",
-          "margin": "xs",
-          "size": "xl",
-          "color": "#444444"
-        },
-        {
-          "type": "box",
-          "layout": "vertical",
-          "contents": [
-            // English word
-          ]
-        }
-      ],
-      "paddingStart": "xxl"
-    },
     "styles": {
       "header": {
         "backgroundColor": "#a3ffa3"
@@ -134,25 +113,25 @@ function createFlexMessage(date, holiday, temp_h, temp_l, weather) {
   }
 
   // スケジュール
-  createScheduleFlexMesseage(flex);
+  let doNotify = createScheduleFlexMesseage(flex);
 
   // 今日の英単語
+  /*
   let englishWord = getWord();
   let wordMeaning = getMeaning();
   flex.footer.contents[1].contents.push(englishWord);
   flex.footer.contents[1].contents.push(wordMeaning);
+  */
 
-  return flex;
+  return {flex, doNotify};
 }
 
 function createScheduleFlexMesseage(flex) {
   // カレンダー情報の取得
   const calendars = JSON.parse(timetreeGetCalendars()).data;
-
   const zero_padding = (t) => ('0' + t).slice(-2);
 
   let event_exists = false;
-  
   for (let calendar of calendars) {
     let events = JSON.parse(timetreeGetUpcomingEvents(calendar.id, 2)).data;
 
@@ -160,7 +139,6 @@ function createScheduleFlexMesseage(flex) {
     if (events.length == 0) {
       let schedule = createNoEventsMessage();
       flex.body.contents[4].contents.push(schedule);
-      event_exists = true;
       continue;
     }
 
@@ -228,10 +206,14 @@ function createScheduleFlexMesseage(flex) {
   }
 
   // 予定なしの時は通知しない
-    if (!event_exists) {
-      let schedule = createNoEventsMessage();
-      flex.body.contents[4].contents.push(schedule);
-    }
+  if (!event_exists) {
+    // let schedule = createNoEventsMessage();
+    // flex.body.contents[4].contents.push(schedule);
+
+    return event_exists;
+  }
+
+  return true;
 }
 
 function createNoEventsMessage() {

@@ -4,5 +4,5 @@ function doPost(e){
   var GID = json.events[0].source.groupId;
 
   const sheet =  SpreadsheetApp.openById(PropertiesService.getScriptProperties().getProperty("SPREADSHEET_ID")).getSheetByName("シート1");
-  sheet.getRange(1,1).setValue(GID);
+  sheet.appendRow([GID, UID]);
 }
